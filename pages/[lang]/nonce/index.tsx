@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 const List = dynamic(() => import("components/List"), { ssr: false });
 
 export default function NonceHome({ i18n }) {
+	
 	return (
 		<main className="flex space-x-4 min-h-screen">
 			<Head>
