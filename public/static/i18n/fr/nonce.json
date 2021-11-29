@@ -13,7 +13,7 @@
 						"website": "Site web"
 					},
 					"placeholders": {
-						"title": "titre",
+						"title": "Titre",
 						"other": "Ce que vous voulez (replissez ce champ pour en faire apparaitre un autre)"
 					},
 					"submit": "Mettre à jour ce Nonce"
