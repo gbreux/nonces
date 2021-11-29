@@ -1,0 +1,34 @@
+{
+  "user": {
+    "id": "",
+    "email": "main@gmail.com"
+  },
+  "identity": {
+    "ids": [],
+    "items": {
+      "1": {
+        "title": "Google",
+        "email": "random@nonces.com",
+        "password": "1234567",
+        "phone": "3360403002",
+        "totp": "secret_key"
+      }
+    }
+  },
+  "email": {
+    "random@nonces.com": {
+      "used": [1],
+      "messages": {
+        "1": []
+      }
+    }
+  },
+  "phone": {
+    "3360403002": {
+      "used": [1],
+      "messages": {
+        "1": []
+      }
+    }
+  }
+}

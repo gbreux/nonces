@@ -1,0 +1,71 @@
+/* ./styles/globals.css */
+@tailwind base;
+@tailwind components;
+
+/** Create a scrollable gallery */
+.scrollable-gallery {
+	@apply flex items-start ml-4 max-w-full overflow-auto;
+	/** The container must be full-width */
+	scroll-snap-type: x mandatory;
+	scroll-padding: 0px calc(50% - 690px - 1rem); /** 690 = 1380/2 => Change that number if you change the .Container width */
+	padding: 0 calc(50% - 690px - 1rem); /** 690 = 1380/2 => Change that number if you change the .Container width */
+	scroll-behavior: smooth;
+	scrollbar-width: none; /* Hide scrollbar on Firefox */
+	-ms-overflow-style: none; /* Hide scrollbar on IE 10+ */
+}
+.scrollable-gallery::-webkit-scrollbar {
+	/* Hide scrollbar on WebKit */
+	width: 0px;
+}
+@media screen and (min-width: 1410px) {
+	.scrollable-gallery {
+		@apply ml-0;
+	}
+}
+.scrollable-gallery > * {
+	scroll-snap-align: start;
+}
+
+@tailwind utilities;
+
+@layer base {
+	@font-face {
+		font-family: "Proxima Nova";
+		src: local("Proxima Nova Bold"), local("ProximaNova-Bold"),
+			url("../font/ProximaNova-Bold.woff2") format("woff2"),
+			url("../font/ProximaNova-Bold.woff") format("woff");
+		font-weight: bold;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "Proxima Nova";
+		src: local("Proxima Nova Semibold"), local("ProximaNova-Semibold"),
+			url("../font/ProximaNova-Semibold.woff2") format("woff2"),
+			url("../font/ProximaNova-Semibold.woff") format("woff");
+		font-weight: 600;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "Proxima Nova";
+		src: local("Proxima Nova Extrabold"), local("ProximaNova-Extrabld"),
+			url("../font/ProximaNova-Extrabld.woff2") format("woff2"),
+			url("../font/ProximaNova-Extrabld.woff") format("woff");
+		font-weight: black;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "Proxima Nova";
+		src: local("Proxima Nova Regular"), local("ProximaNova-Regular"),
+			url("../font/ProximaNova-Regular.woff2") format("woff2"),
+			url("../font/ProximaNova-Regular.woff") format("woff");
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+}

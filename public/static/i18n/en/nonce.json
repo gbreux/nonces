@@ -1,0 +1,41 @@
+{
+	"meta": {
+		"title": "Nonce"
+	},
+	"Components": {
+		"ListItem": {
+			"copied": "Copied!",
+			"Components": {
+				"NonceDialog": {
+					"labels": {
+						"login": "Login",
+						"password": "Password",
+						"website": "Website"
+					},
+					"placeholders": {
+						"title": "Title",
+						"other": "Anything you want, fill in to add another field"
+					},
+					"submit": "Update Nonce"
+				}
+			}
+		},
+		"List": {
+			"cta": "Add a nonce",
+			"Components": {
+				"NonceDialog": {
+					"labels": {
+						"login": "Login",
+						"password": "Password",
+						"website": "Website"
+					},
+					"placeholders": {
+						"title": "Title",
+						"other": "Anything you want, fill in to add another field"
+					},
+					"submit": "Create Nonce"
+				}
+			}
+		}
+	}
+}
