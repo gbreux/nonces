@@ -217,14 +217,15 @@ export default function AddNonceDialog({
 						>
 							{i18n.cancel}
 						</Button>
-						<button
+						<Button
+							ghost
 							type="button"
 							onClick={() => {
 								resetToDefault();
 							}}
 						>
 							{i18n.reset}
-						</button>
+						</Button>
 					</div>
 					<Button>{i18n.submit}</Button>
 				</footer>

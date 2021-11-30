@@ -124,15 +124,17 @@ export default function GeneratePassword({
 						</label>
 					</section>
 					<footer className="flex items-center mt-6">
-						<button
-						className="w-1/2"
+						<Button
+							ghost
+							className="w-1/2"
+							small
 							type="button"
 							onClick={() => {
 								setpass(nanoid(preferences)());
 							}}
 						>
 							{i18n.regen}
-						</button>
+						</Button>
 						<Button
 							type="button"
 							className="w-1/2"
