@@ -40,7 +40,7 @@ export default function ListItem({ i18n }) {
 					<circle cx="33" cy="33" r="2" fill="white" />
 				</svg>
 				<div className="ml-2">
-					<Typography variant="h5" className="font-bold">
+					<Typography variant="h5" className="font-bold text-gray-900">
 						{item?.title}
 					</Typography>
 					{Object.keys(item?.meta || {})
@@ -49,7 +49,7 @@ export default function ListItem({ i18n }) {
 						)
 						.map((key) => {
 							return (
-								<Typography key={key} variant="sp" className="text-gray-500">
+								<Typography key={key} variant="sp" className="text-gray-600">
 									{item?.meta[key]?.value}
 								</Typography>
 							);
@@ -66,7 +66,7 @@ export default function ListItem({ i18n }) {
 			</header>
 			<section className="px-4">
 				<ul className="rounded-lg border overflow-hidden">
-					{Object.keys(item?.meta || {}).map((key) => {
+					{Object.keys(item?.meta || {}).map((key, index) => {
 						const { value = "", secret = false } = item?.meta[key] || {};
 						return (
 							<li
@@ -105,7 +105,7 @@ export default function ListItem({ i18n }) {
 										</Typography>
 									) : (
 										<button className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-600 bg-opacity-0 hover:bg-opacity-10 focus:bg-opacity-5">
-											<Copy className="w-5 h-5 text-gray-700" />
+											<Copy className="w-5 h-5 text-gray-700" titleId={`Copy${index}`} title={`Copy ${key}`}/>
 										</button>
 									)}
 								</aside>

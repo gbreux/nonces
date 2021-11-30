@@ -1,6 +1,7 @@
 {
 	"meta": {
-		"title": "Nonce"
+		"title": "Nonce",
+		"description": "Take back control of your online presence with an easy to use password manager"
 	},
 	"Components": {
 		"ListItem": {

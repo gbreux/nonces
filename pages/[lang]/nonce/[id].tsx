@@ -31,6 +31,7 @@ export default function Nonce({ i18n }) {
 		>
 			<Head>
 				<title>{i18n?.meta?.title}</title>
+				<meta name="description" content={i18n?.meta?.description} />
 			</Head>
 			<section
 				className="overflow-auto h-screen w-full max-w-xs min-w-full md:min-w-0"

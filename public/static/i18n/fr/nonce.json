@@ -1,6 +1,7 @@
 {
 	"meta": {
-		"title": "Nonce"
+		"title": "Nonce",
+		"description": "Reprends le controle de ta présence en ligne avec un gestionnaire de mot de passe facile à utiliser"
 	},
 	"Components": {
 		"ListItem": {

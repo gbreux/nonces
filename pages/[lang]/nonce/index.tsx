@@ -4,11 +4,11 @@ import dynamic from "next/dynamic";
 const List = dynamic(() => import("components/List"), { ssr: false });
 
 export default function NonceHome({ i18n }) {
-	
 	return (
 		<main className="flex space-x-4 min-h-screen">
 			<Head>
-				<title>Nonces</title>
+				<title>{i18n.meta.title}</title>
+				<meta name="description" content={i18n.meta.description} />
 			</Head>
 			<section className="w-full overflow-auto h-screen">
 				{typeof window !== "undefined" ? (
