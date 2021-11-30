@@ -44,3 +44,18 @@ export function stringToColour(stringInput: string) {
 	}, 0);
 	return `hsl(${stringUniqueHash % 360}, 95%, 35%)`;
 }
+
+export function getPasswordStrength(str: string) {
+	const strong =
+		/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{12,})/;
+	const medium =
+		/((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))/;
+
+	if (strong.test(str)) {
+		return "strong";
+	} else if (medium.test(str)) {
+		return "medium";
+	} else {
+		return "weak";
+	}
+}

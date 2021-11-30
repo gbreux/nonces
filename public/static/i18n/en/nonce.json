@@ -10,13 +10,17 @@
 					"labels": {
 						"login": "Login",
 						"password": "Password",
-						"website": "Website"
+						"website": "Website",
+						"other": "Other"
 					},
 					"placeholders": {
 						"title": "Title",
+						"password": "Generate a password",
 						"other": "Anything you want, fill in to add another field"
 					},
-					"submit": "Update Nonce"
+					"submit": "Update Nonce",
+					"cancel": "Cancel",
+					"reset": "Reset"
 				}
 			}
 		},
@@ -27,13 +31,17 @@
 					"labels": {
 						"login": "Login",
 						"password": "Password",
-						"website": "Website"
+						"website": "Website",
+						"other": "Other"
 					},
 					"placeholders": {
 						"title": "Title",
+						"password": "Generate a password",
 						"other": "Anything you want, fill in to add another field"
 					},
-					"submit": "Create Nonce"
+					"submit": "Create Nonce",
+					"cancel": "Cancel",
+					"reset": "Reset"
 				}
 			}
 		}

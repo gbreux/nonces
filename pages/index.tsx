@@ -11,7 +11,6 @@ export async function getServerSideProps({ req }) {
 		req.headers?.["accept-language"].split(",")[0].substring(0, 2) || "en";
 
 	if (isValidLang) {
-		console.log(urlLang, req.url, req.url.split("/")[1], supportedLanguages);
 		return {
 			redirect: {
 				statusCode: 307,

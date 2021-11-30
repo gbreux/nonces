@@ -10,15 +10,14 @@ export default function Nonce({ i18n }) {
 			<Head>
 				<title>{i18n?.meta?.title}</title>
 			</Head>
-			<section className="w-3/12 overflow-auto h-screen">
+			<section className="overflow-auto h-screen w-full max-w-xs">
 				{typeof window !== "undefined" ? (
 					<List i18n={i18n.Components.List} />
 				) : null}
 			</section>
-			<section className="w-4/12">
+			<section className="w-9/12 max-w-xl">
 				{typeof window !== "undefined" ? <ListItem i18n={i18n.Components.ListItem} /> : null}
 			</section>
-			<section className="w-5/12"></section>
 		</main>
 	);
 }

@@ -1,20 +1,19 @@
+import { useEffect, useState, memo } from "react";
 import { useRouter } from "next/router";
-
-import { useEffect, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 
-import { db } from "models/db";
 import Typography from "components/Typography";
+import Button from "components/Button";
 import Link from "components/Link";
 import Trash from "components/Icons/Trash";
 import NonceDialog from "components/Dialog/NonceDialog";
 import { goToRoute, stringToColour } from "lib/utils";
+import { db } from "models/db";
 
 export default function List({ i18n }) {
 	const router = useRouter();
 	const [search, setsearch] = useState("");
 	const [openModal, setopenModal] = useState(false);
-
 	const items = useLiveQuery(() => {
 		if (search) {
 			return db?.nonce
@@ -43,7 +42,6 @@ export default function List({ i18n }) {
 	}, [router.asPath]);
 
 	useEffect(() => {
-		console.log(items?.length)
 		if (items && !items?.length) {
 			setopenModal(true);
 		}
@@ -117,12 +115,7 @@ export default function List({ i18n }) {
 				})}
 			</ul>
 			<footer className="bg-white sticky bottom-0 p-4 mt-auto">
-				<button
-					className="flex w-full justify-center rounded-lg p-2 bg-blue-400 hover:bg-blue-500"
-					onClick={() => setopenModal(true)}
-				>
-					{i18n.cta}
-				</button>
+				<Button className="w-full" onClick={() => setopenModal(true)}>{i18n.cta}</Button>
 				<NonceDialog
 					i18n={i18n.Components.NonceDialog}
 					isOpen={openModal}

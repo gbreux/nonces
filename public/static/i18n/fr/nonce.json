@@ -10,13 +10,17 @@
 					"labels": {
 						"login": "Login",
 						"password": "Mot de passe",
-						"website": "Site web"
+						"website": "Site web",
+						"other": "Autre"
 					},
 					"placeholders": {
 						"title": "Titre",
+						"password": "Générer un mot de passe",
 						"other": "Ce que vous voulez (replissez ce champ pour en faire apparaitre un autre)"
 					},
-					"submit": "Mettre à jour ce Nonce"
+					"submit": "Mettre à jour ce Nonce",
+					"cancel": "Annuler",
+					"reset": "Réinitialiser"
 				}
 			}
 		},
@@ -27,13 +31,17 @@
 					"labels": {
 						"login": "Login",
 						"password": "Mot de passe",
-						"website": "Site web"
+						"website": "Site web",
+						"other": "Autre"
 					},
 					"placeholders": {
 						"title": "Titre",
+						"password": "Générer un mot de passe",
 						"other": "Ce que vous voulez (replissez ce champ pour en faire apparaitre un autre)"
 					},
-					"submit": "Créer Nonce"
+					"submit": "Créer Nonce",
+					"cancel": "Annuler",
+					"reset": "Réinitialiser"
 				}
 			}
 		}

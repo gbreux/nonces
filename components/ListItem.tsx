@@ -6,6 +6,7 @@ import NonceDialog from "components/Dialog/NonceDialog";
 import Copy from "components/Icons/Copy";
 import Link from "components/Icons/Link";
 import Edit from "components/Icons/Edit";
+import Button from "components/Button";
 import Typography from "components/Typography";
 import { stringToColour } from "lib/utils";
 import { db } from "models/db";
@@ -25,7 +26,7 @@ export default function ListItem({ i18n }) {
 
 	return (
 		<div className="flex flex-col overflow-auto h-screen">
-			<header className={`p-4 flex`}>
+			<header className="p-4 flex items-center">
 				<svg width="40" viewBox="0 0 40 40">
 					<rect
 						width="40"
@@ -54,12 +55,14 @@ export default function ListItem({ i18n }) {
 							);
 						})}
 				</div>
-				<button
-					className="w-10 h-10 rounded-full hover:bg-gray-200 flex items-center justify-center ml-auto"
+				<Button
+					className="ml-auto flex items-center text-sm"
+					rounded
+					small
 					onClick={() => setopenNonceDialog(true)}
 				>
-					<Edit className="w-5 h-5" />
-				</button>
+					<Edit className="w-4 h-4 mr-2" />Edit 
+				</Button>
 			</header>
 			<section className="px-4">
 				<ul className="rounded-lg border overflow-hidden">
