@@ -8,6 +8,7 @@ import GeneratePassword from "components/GeneratePassword";
 import EyeOn from "components/Icons/EyeOn";
 import EyeOff from "components/Icons/EyeOff";
 import { getRandomId } from "lib/utils";
+import Trash from "components/Icons/Trash";
 
 export default function AddNonceDialog({
 	isOpen,
@@ -79,7 +80,7 @@ export default function AddNonceDialog({
 				: defaultMeta,
 		});
 	}, [defaultValues, reset]);
-	const { fields, append } = useFieldArray({
+	const { fields, append, remove } = useFieldArray({
 		control,
 		name: "meta",
 	});
@@ -190,6 +191,15 @@ export default function AddNonceDialog({
 										setValue(`meta.${index}.secret`, true);
 									}}
 								/>
+								<button
+									className="text-gray-600 cursor-pointer w-10 h-10 flex items-center justify-center focus:outline-black rounded-full bg-transparent hover:bg-gray-100 focus:bg-gray-100"
+									type="button"
+									onClick={() => {
+										remove(index);
+									}}
+								>
+									<Trash className="w-5 h-5" />
+								</button>
 							</aside>
 						</fieldset>
 					);

@@ -48,20 +48,22 @@ export default function List({ i18n }) {
 	}, [items?.length]);
 
 	return (
-		<div className="flex flex-col overflow-auto h-screen">
-			<form className="p-4 sticky top-0 bg-white">
+		<div className="flex flex-col overflow-auto h-screen md:border-r">
+			<form className="p-4 sticky top-0 bg-gray-100 border-b ">
 				<input
-					className="rounded-lg bg-gray-200 focus:bg-gray-100 w-full py-2 px-4 focus:outline-none"
+					className="rounded-lg bg-white border w-full py-2 px-4 focus:outline-none"
 					placeholder="i.e Google"
 					onChange={(e) => {
 						setsearch(e.target.value);
 					}}
 				/>
 			</form>
-			<ul className="pl-2 pr-4 space-y-1">
+			<ul className="p-4 space-y-1">
 				{items?.map(({ title, uid, id, meta }) => {
 					const path = `/[lang]/nonce/[id]`;
-					const value = meta[Object.keys(meta)[0]]?.value;
+					const value = Object.keys(meta)
+						.filter((key) => !meta[key].secret)
+						.map((key) => meta[key])[0]?.value;
 					return (
 						<li key={id}>
 							<Link href={path} params={{ id: uid }}>
@@ -70,7 +72,7 @@ export default function List({ i18n }) {
 										router.query.id == uid ? "bg-gray-100" : ""
 									}`}
 								>
-									<svg width="40" viewBox="0 0 40 40">
+									<svg width="40" viewBox="0 0 40 40" style={{ minWidth: 40 }}>
 										<rect
 											width="40"
 											height="40"
@@ -115,7 +117,9 @@ export default function List({ i18n }) {
 				})}
 			</ul>
 			<footer className="bg-white sticky bottom-0 p-4 mt-auto">
-				<Button className="w-full" onClick={() => setopenModal(true)}>{i18n.cta}</Button>
+				<Button className="w-full" onClick={() => setopenModal(true)}>
+					{i18n.cta}
+				</Button>
 				<NonceDialog
 					i18n={i18n.Components.NonceDialog}
 					isOpen={openModal}

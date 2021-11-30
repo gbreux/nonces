@@ -18,8 +18,8 @@ export default function Modal({
 			isOpen={isOpen}
 			onRequestClose={close}
 			width={width}
-			className="cursor-auto bg-white max-w-3xl my-auto w-full rounded-2xl shadow-2xl relative focus:outline-none"
-			overlayClassName="fixed inset-0 items-start p-4 justify-center flex h-full overflow-auto z-50 cursor-pointer bg-white bg-opacity-80"
+			className="cursor-auto bg-white max-w-3xl h-full md:h-auto md:my-auto w-full md:rounded-2xl md:shadow-2xl relative focus:outline-none"
+			overlayClassName="fixed inset-0 items-start md:p-4 justify-center flex h-full overflow-auto z-50 cursor-pointer bg-gray-900 bg-opacity-90"
 			{...props}
 		>
 			<div style={{ borderRadius: "inherit" }} className="p-4 md:p-7">

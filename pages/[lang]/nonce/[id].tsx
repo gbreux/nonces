@@ -1,21 +1,27 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import { useEffect, useRef } from "react";
 
 const List = dynamic(() => import("components/List"), { ssr: false });
 const ListItem = dynamic(() => import("components/ListItem"), { ssr: false });
 
 export default function Nonce({ i18n }) {
-	const { query } = useRouter();
 	const container = useRef<any>();
 
 	useEffect(() => {
-		container.current?.scrollTo({
-			left: window.innerWidth,
-			behavior: "smooth",
-		});
-	}, [container.current, query.id]);
+		const routeChangeComplete = (page: string) => {
+			container.current?.scrollTo({
+				left: window.innerWidth,
+				behavior: "smooth",
+			});
+		};
+
+		Router.events.on("routeChangeComplete", routeChangeComplete);
+		return () => {
+			Router.events.off("routeChangeComplete", routeChangeComplete);
+		};
+	}, [container.current]);
 
 	return (
 		<main
