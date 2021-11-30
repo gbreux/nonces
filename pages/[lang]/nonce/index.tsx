@@ -10,7 +10,7 @@ export default function NonceHome({ i18n }) {
 			<Head>
 				<title>Nonces</title>
 			</Head>
-			<section className="w-3/12 overflow-auto h-screen">
+			<section className="w-full overflow-auto h-screen">
 				{typeof window !== "undefined" ? (
 					<List i18n={i18n.Components.List} />
 				) : null}
