@@ -85,7 +85,7 @@ export default function List({ i18n }) {
 										<circle cx="33" cy="33" r="2" fill="white" />
 									</svg>
 									<div className="ml-2">
-										<Typography variant="h5" className="font-bold text-gray-900">
+										<Typography variant="h5" className="font-bold">
 											{title}
 										</Typography>
 										<Typography variant="sp" className="text-gray-600">

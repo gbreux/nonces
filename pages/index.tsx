@@ -1,7 +1,7 @@
 import { supportedLanguages } from "public/static/languages";
 
 export default function DefaultRoute() {
-	return <>qsdf</>;
+	return <></>;
 }
 
 export async function getServerSideProps({ req }) {

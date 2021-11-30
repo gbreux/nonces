@@ -24,7 +24,7 @@ export default class MyDocument extends Document<{
 		return (
 			<Html lang={__NEXT_DATA__.query.lang}>
 				<Head />
-				<body id="Nonce">
+				<body id="Nonce" className="text-gray-900">
 					<Main />
 					<NextScript />
 				</body>

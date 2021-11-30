@@ -6,7 +6,7 @@ import "public/styles/global.css";
 
 function MyApp({ Component, pageProps }) {
 	useEffect(() => {
-		setAppElement("#modal");
+		setAppElement("#Nonce");
 	});
 
 	return (
@@ -14,9 +14,7 @@ function MyApp({ Component, pageProps }) {
 			<Head>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<section id="modal">
-				<Component {...pageProps} />
-			</section>
+			<Component {...pageProps} />
 		</>
 	);
 }
