@@ -21,7 +21,16 @@
 					},
 					"submit": "Mettre à jour ce Nonce",
 					"cancel": "Annuler",
-					"reset": "Réinitialiser"
+					"reset": "Réinitialiser",
+					"Components": {
+						"GeneratePassword": {
+							"special": "Spéciales",
+							"regen": "Regénérer",
+							"uppercase": "Lettres capitales",
+							"number": "Chiffres",
+							"validate": "Valider"
+						}
+					}
 				}
 			}
 		},
@@ -42,7 +51,16 @@
 					},
 					"submit": "Créer Nonce",
 					"cancel": "Annuler",
-					"reset": "Réinitialiser"
+					"reset": "Réinitialiser",
+					"Components": {
+						"GeneratePassword": {
+							"special": "Spéciales",
+							"regen": "Regénérer",
+							"uppercase": "Lettres capitales",
+							"number": "Chiffres",
+							"validate": "Valider"
+						}
+					}
 				}
 			}
 		}

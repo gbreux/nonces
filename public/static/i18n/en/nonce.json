@@ -21,7 +21,16 @@
 					},
 					"submit": "Update Nonce",
 					"cancel": "Cancel",
-					"reset": "Reset"
+					"reset": "Reset",
+					"Components": {
+						"GeneratePassword": {
+							"special": "Special",
+							"regen": "Regenerate",
+							"uppercase": "Uppercase",
+							"number": "Number",
+							"validate": "Validate"
+						}
+					}
 				}
 			}
 		},
@@ -42,7 +51,16 @@
 					},
 					"submit": "Create Nonce",
 					"cancel": "Cancel",
-					"reset": "Reset"
+					"reset": "Reset",
+					"Components": {
+						"GeneratePassword": {
+							"special": "Special",
+							"regen": "Regenerate",
+							"uppercase": "Uppercase",
+							"number": "Number",
+							"validate": "Validate"
+						}
+					}
 				}
 			}
 		}

@@ -181,6 +181,7 @@ export default function AddNonceDialog({
 									)}
 								</label>
 								<GeneratePassword
+									i18n={i18n.Components.GeneratePassword}
 									defaultValue={meta[index].value || ""}
 									onClose={() => {
 										setValue(`meta.${index}.hide`, "••••••••");

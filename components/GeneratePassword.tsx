@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 
 import Lightning from "components/Icons/Lightning";
 import { getPasswordStrength } from "lib/utils";
-import Button from "./Button";
+import Button from "components/Button";
 
 const alphabet = "abcdefghijklmlnopqrsuvwxyz";
 const number = "0123456789";
@@ -20,10 +20,12 @@ export default function GeneratePassword({
 	onSelect,
 	onClose,
 	defaultValue,
+	i18n,
 }: {
 	onSelect: (pass: string) => void;
 	onClose: () => void;
 	defaultValue: string;
+	i18n: { [key: string]: any };
 }) {
 	const { register, watch } = useForm({
 		defaultValues: defaultPreferences,
@@ -56,7 +58,7 @@ export default function GeneratePassword({
 
 	useEffect(() => {
 		if (isOpen) {
-			onSelect(pass);
+			onSelect(defaultValue || pass);
 			window.addEventListener("click", handleOutsideClick);
 		}
 		return () => {
@@ -110,17 +112,39 @@ export default function GeneratePassword({
 						/>
 						<label className="flex items-center cursor-pointer">
 							<input type="checkbox" {...register("uppercase")} />
-							<span className="inline-flex ml-2">Uppercase</span>
+							<span className="inline-flex ml-2">{i18n.uppercase}</span>
 						</label>
 						<label className="flex items-center cursor-pointer">
 							<input type="checkbox" {...register("number")} />
-							<span className="inline-flex ml-2">Number</span>
+							<span className="inline-flex ml-2">{i18n.number}</span>
 						</label>
 						<label className="flex items-center cursor-pointer">
 							<input type="checkbox" {...register("special")} />
-							<span className="inline-flex ml-2">Special</span>
+							<span className="inline-flex ml-2">{i18n.special}</span>
 						</label>
 					</section>
+					<footer className="flex items-center mt-6">
+						<button
+						className="w-1/2"
+							type="button"
+							onClick={() => {
+								setpass(nanoid(preferences)());
+							}}
+						>
+							{i18n.regen}
+						</button>
+						<Button
+							type="button"
+							className="w-1/2"
+							small
+							onClick={() => {
+								onSelect(pass);
+								setisOpen(false);
+							}}
+						>
+							{i18n.validate}
+						</Button>
+					</footer>
 				</aside>
 			) : null}
 		</article>
