@@ -110,6 +110,7 @@ export default function AddNonceDialog({
 			<form data-rel="add-nonce-dialog-form" onSubmit={handleSubmit(submit)}>
 				<div className="pr-10">
 					<input
+						autoFocus
 						className=" p-2 font-bold text-3xl md:text-4xl w-full mb-4 rounded-md outline-none bg-transparent hover:bg-gray-100 focus:bg-gray-100"
 						placeholder={i18n.placeholders.title}
 						{...register("title")}
