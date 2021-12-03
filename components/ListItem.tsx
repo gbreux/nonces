@@ -9,15 +9,17 @@ import Edit from "components/Icons/Edit";
 import Button from "components/Button";
 import Typography from "components/Typography";
 import { stringToColour } from "lib/utils";
-import { db } from "models/db";
+import initDb from "models/db";
 
 export default function ListItem({ i18n }) {
 	const [openNonceDialog, setopenNonceDialog] = useState(false);
 	const [copied, setcopied] = useState("");
 	const router = useRouter();
-
-	const item = useLiveQuery(() => {
-		return db?.nonce
+	// const item = [];
+	const item = useLiveQuery(async () => {
+		const db = await initDb();
+		return await db
+			?.table("nonce")
 			?.filter(({ uid }) => {
 				return uid === router?.query?.id;
 			})
@@ -101,7 +103,10 @@ export default function ListItem({ i18n }) {
 								)}
 								<aside className="absolute right-2 top-1/2 transform -translate-y-1/2">
 									{copied === key ? (
-										<Typography variant="sp" className=" text-green-500 font-bold">
+										<Typography
+											variant="sp"
+											className=" text-green-500 font-bold"
+										>
 											{i18n.copied}
 										</Typography>
 									) : (
@@ -125,10 +130,12 @@ export default function ListItem({ i18n }) {
 				close={() => setopenNonceDialog(false)}
 				defaultValues={item}
 				onSubmit={async (item) => {
-					await db.nonce
-						.where("uid")
-						.equals(router.query.id || "")
-						.modify({ ...item });
+					await initDb().then((db) =>
+						db.nonce
+							.where("uid")
+							.equals(router.query.id || "")
+							.modify({ ...item })
+					);
 				}}
 			/>
 		</div>

@@ -3,6 +3,39 @@
 		"title": "Nonce",
 		"description": "Reprends le controle de ta présence en ligne avec un gestionnaire de mot de passe facile à utiliser"
 	},
+	"WithAuth": {
+		"Components": {
+			"Credential": {
+				"title": "Dévérouiller {name}",
+				"login": "Dévérouiller",
+				"create": "Créer un nouveau coffre",
+				"labels": {
+					"secret": "Clef secret",
+					"password": "Mot de passe"
+				},
+				"errors": {
+					"WRONG_PASSWORD": "Mot de passe incorrecte"
+				}
+			},
+			"ListDb": { "title": "Choisis ton coffre", "create": "Créer" },
+			"CreateDb": {
+				"title": "Créer un coffre",
+				"copied": "Copié !",
+				"change": "Changer",
+				"create": "Créer",
+				"labels": {
+					"name": "Nom",
+					"secret": "Clef secret",
+					"password": "Mot de passe"
+				},
+				"placeholders": {
+					"name": "Pour la retrouver plus tard et doit être unique !",
+					"secret": "Gardes la en lieux sûr. Tu en auras besoin pour accéder à tes mots de passes. Pas de clef, pas de mots de passes.",
+					"password": "Le seul mot de passe que tu devrais connaître par coeur."
+				}
+			}
+		}
+	},
 	"Components": {
 		"ListItem": {
 			"copied": "Copié !",

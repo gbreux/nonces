@@ -3,6 +3,39 @@
 		"title": "Nonce",
 		"description": "Take back control of your online presence with an easy to use password manager"
 	},
+	"WithAuth": {
+		"Components": {
+			"Credential": {
+				"title": "Unlock {name}",
+				"login": "Unlock",
+				"create": "Create a new vault",
+				"labels": {
+					"secret": "Clef secret",
+					"password": "Mot de passe"
+				},
+				"errors": {
+					"WRONG_PASSWORD": "Wrong password"
+				}
+			},
+			"ListDb": { "title": "Chose a vault", "create": "Create" },
+			"CreateDb": {
+				"title": "Create a vault",
+				"copied": "Copied!",
+				"change": "Change",
+				"create": "Create",
+				"labels": {
+					"name": "Name",
+					"secret": "Secret key",
+					"password": "Password"
+				},
+				"placeholders": {
+					"name": "For later reference and must be unique!",
+					"secret": "Make sure you store it somewhere safe. You will need it to access you passwords. No keys, no passwords.",
+					"password": "The only password you should know by heart."
+				}
+			}
+		}
+	},
 	"Components": {
 		"ListItem": {
 			"copied": "Copied!",

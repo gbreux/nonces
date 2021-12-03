@@ -1,18 +1,13 @@
 import Dexie, { Table } from "dexie";
-import { populate } from "./populate";
-import { Nonce } from "./nonce";
-import { Nonces } from "./nonces";
+import middleware from "dexie-easy-encrypt";
 
-export class NoncesDb extends Dexie {
+import { Nonce } from "models/nonce";
+import { Nonces } from "models/nonces";
+import { encryption } from "lib/utils";
+
+class NoncesDb extends Dexie {
 	nonces!: Table<Nonces, number>;
 	nonce!: Table<Nonce, number>;
-	constructor() {
-		super("Nonces");
-		this.version(2).stores({
-			nonces: "++id",
-			nonce: "++id, noncesId, title, uid",
-		});
-	}
 
 	deleteList(noncesId: number) {
 		return this.transaction("rw", this.nonce, this.nonces, () => {
@@ -20,15 +15,37 @@ export class NoncesDb extends Dexie {
 			this.nonces.delete(noncesId);
 		});
 	}
+	// changePassword(oldPassword = "123", newPassword = "12345") {
+	// 	const db = new NoncesDb("Nonces");
+	// 	db.version(1).stores({
+	// 		nonces: "++id",
+	// 		nonce: "++id, noncesId, title, uid",
+	// 	});
+	// 	db.nonce.toArray().then((arr) => {
+	// 		arr.map(({ id, __DATA__ }) => {
+	// 			const data = encryption(oldPassword).decrypt(__DATA__);
+	// 			console.log({ id, ...data });
+	// 		});
+	// 	});
+	// }
 }
 
-export const db = new NoncesDb();
+const { name, secret } = window["___TEMP_DB_DATA___"];
+const db = new NoncesDb(name);
+const tables = ["nonces", "nonce"];
+console.log(secret);
 
-db.on("populate", populate);
-
-export function resetDatabase() {
-	return db.transaction("rw", db.nonces, db.nonce, async () => {
-		await Promise.all(db.tables.map((table) => table.clear()));
-		await populate();
-	});
+if (secret) {
+	middleware({ db, encryption: encryption(secret || ""), tables });
 }
+db.version(2).stores({
+	nonces: "++id",
+	nonce: "++id, noncesId, title, uid",
+});
+
+async function open(): Promise<NoncesDb> {
+	await db.open();
+	return db;
+}
+
+export default open;

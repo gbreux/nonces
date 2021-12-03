@@ -1,9 +1,11 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
+import withAuth from "hoc/withAuth";
+
 const List = dynamic(() => import("components/List"), { ssr: false });
 
-export default function NonceHome({ i18n }) {
+export default withAuth(function NonceHome({ i18n, dbData }) {
 	return (
 		<main className="flex space-x-4 min-h-screen">
 			<Head>
@@ -17,7 +19,7 @@ export default function NonceHome({ i18n }) {
 			</section>
 		</main>
 	);
-}
+});
 
 export async function getStaticProps({ params }) {
 	const i18n = await import(`public/static/i18n/${params.lang}/nonce.json`);

@@ -53,7 +53,7 @@ export default function AddNonceDialog({
 				placeholder: "https://",
 			},
 		],
-		[i18n.labels, isOpen]
+		[i18n.labels, i18n.placeholders]
 	);
 	const { control, register, reset, handleSubmit, watch, setValue } = useForm({
 		defaultValues: {
@@ -79,7 +79,7 @@ export default function AddNonceDialog({
 				  })
 				: defaultMeta,
 		});
-	}, [defaultValues, reset]);
+	}, [defaultMeta, defaultValues, reset]);
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: "meta",
@@ -103,7 +103,7 @@ export default function AddNonceDialog({
 				(currentActive as HTMLElement)?.focus();
 			});
 		}
-	}, [lastMeta?.label, lastMeta?.value]);
+	}, [append, i18n.placeholders.other, lastMeta?.label, lastMeta?.value]);
 
 	return (
 		<Dialog isOpen={isOpen} close={close}>

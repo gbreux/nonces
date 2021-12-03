@@ -1,10 +1,10 @@
-import { db } from "./db";
+import db from "./db";
 
 export async function populate() {
-	const noncesId = await db.nonces.add({
-		title: "all",
-	});
-
+	// const noncesId = await db.nonces.add({
+	// 	title: "all",
+	// });
+	//
 	// await db.nonce.bulkAdd([
 	// 	{
 	// 		noncesId,

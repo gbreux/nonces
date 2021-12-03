@@ -3,10 +3,12 @@ import dynamic from "next/dynamic";
 import Router from "next/router";
 import { useEffect, useRef } from "react";
 
+import withAuth from "hoc/withAuth";
+
 const List = dynamic(() => import("components/List"), { ssr: false });
 const ListItem = dynamic(() => import("components/ListItem"), { ssr: false });
 
-export default function Nonce({ i18n }) {
+export default withAuth(function Nonce({ i18n, dbData }) {
 	const container = useRef<any>();
 
 	useEffect(() => {
@@ -21,7 +23,7 @@ export default function Nonce({ i18n }) {
 		return () => {
 			Router.events.off("routeChangeComplete", routeChangeComplete);
 		};
-	}, [container.current]);
+	}, []);
 
 	return (
 		<main
@@ -53,9 +55,9 @@ export default function Nonce({ i18n }) {
 			</section>
 		</main>
 	);
-}
+});
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, ...rest }) {
 	const i18n = await import(`public/static/i18n/${params.lang}/nonce.json`);
 	return {
 		props: {

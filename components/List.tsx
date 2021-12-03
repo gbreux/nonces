@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useLiveQuery } from "dexie-react-hooks";
 
@@ -8,29 +8,30 @@ import Link from "components/Link";
 import Trash from "components/Icons/Trash";
 import NonceDialog from "components/Dialog/NonceDialog";
 import { goToRoute, stringToColour } from "lib/utils";
-import { db } from "models/db";
+import initDb from "models/db";
 
 export default function List({ i18n }) {
 	const router = useRouter();
 	const [search, setsearch] = useState("");
 	const [openModal, setopenModal] = useState(false);
-	const items = useLiveQuery(() => {
+	const items = useLiveQuery(async () => {
+		const db = await initDb();
+		const result = await db?.nonce?.toArray();
 		if (search) {
-			return db?.nonce
-				?.filter(({ title, meta }) => {
-					return (
-						title.toLowerCase().indexOf(search) >= 0 ||
-						Object.keys(meta).filter((key) => {
-							return (
-								!meta[key]?.secret &&
-								meta[key]?.value?.toLowerCase().indexOf(search) >= 0
-							);
-						}).length > 0
-					);
-				})
-				?.toArray();
+			const searchResult = result.filter(({ title, meta }) => {
+				return (
+					title.toLowerCase().indexOf(search) >= 0 ||
+					Object.keys(meta).filter((key) => {
+						return (
+							!meta[key]?.secret &&
+							meta[key]?.value?.toLowerCase().indexOf(search) >= 0
+						);
+					}).length > 0
+				);
+			});
+			return [...(searchResult || [])];
 		} else {
-			return db?.nonce?.orderBy("title")?.toArray();
+			return [...(result || [])];
 		}
 	}, [search]);
 
@@ -47,6 +48,8 @@ export default function List({ i18n }) {
 		}
 	}, [items?.length]);
 
+	console.log({ items });
+
 	return (
 		<div className="flex flex-col overflow-auto h-screen md:border-r">
 			<form className="p-4 sticky top-0 bg-gray-100 border-b ">
@@ -59,13 +62,13 @@ export default function List({ i18n }) {
 				/>
 			</form>
 			<ul className="p-4 space-y-1">
-				{items?.map(({ title, uid, id, meta }) => {
+				{items?.map(({ title, uid, meta }) => {
 					const path = `/[lang]/nonce/[id]`;
-					const value = Object.keys(meta)
-						.filter((key) => !meta[key].secret)
+					const value = Object.keys(meta || {})
+						.filter((key) => !meta?.[key].secret)
 						.map((key) => meta[key])[0]?.value;
 					return (
-						<li key={id}>
+						<li key={uid}>
 							<Link href={path} params={{ id: uid }}>
 								<a
 									className={`group p-2 hover:bg-gray-100 rounded-md flex items-center ${
@@ -99,13 +102,11 @@ export default function List({ i18n }) {
 												: "hidden group-hover:flex"
 										}`}
 										onClick={() => {
-											db.nonce
-												.where("uid")
-												.equals(uid)
-												.delete()
-												.then(() => {
+											initDb().then((db) =>
+												db.nonce.get({ uid }).then(() => {
 													goToRoute("/[lang]/nonce", router.query.lang);
-												});
+												})
+											);
 										}}
 									>
 										<Trash className="w-5 h-5" />
@@ -125,7 +126,7 @@ export default function List({ i18n }) {
 					isOpen={openModal}
 					close={() => setopenModal(false)}
 					onSubmit={(item) => {
-						db.nonce.add(item);
+						initDb().then((db) => db.nonce.add({ ...item }));
 						goToRoute("/[lang]/nonce/[id]", router.query.lang, {
 							id: item.uid,
 						});
