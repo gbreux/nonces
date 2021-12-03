@@ -14,7 +14,9 @@ export default function withAuth(Component) {
 		const [selectedDb, setselectedDb] = useState<string>("");
 		const [databases, setdatabases] = useState<string[]>([]);
 		const [errors, seterrors] = useState<{ [key: string]: string }>({});
-		const [openVault, setopenVault] = useState(false);
+		const [openVault, setopenVault] = useState(
+			typeof window !== "undefined" && window["___TEMP_DB_DATA___"]
+		);
 		const vaultData =
 			typeof window !== "undefined" ? window["___TEMP_DB_DATA___"] : {};
 		const checkStep = useCallback(() => {
@@ -37,11 +39,6 @@ export default function withAuth(Component) {
 					}
 				}
 			});
-		}, []);
-
-		useEffect(() => {
-			// To keep the vault open between route navigation
-			setopenVault(!!window["___TEMP_DB_DATA___"]);
 		}, []);
 
 		useEffect(() => {
@@ -95,7 +92,6 @@ export default function withAuth(Component) {
 		);
 
 		function login(values) {
-			console.log({ values });
 			try {
 				openDb(values.name, values.secret);
 			} catch (e) {

@@ -9,6 +9,7 @@ import Trash from "components/Icons/Trash";
 import NonceDialog from "components/Dialog/NonceDialog";
 import { goToRoute, stringToColour } from "lib/utils";
 import initDb from "models/db";
+import GlobalLink from "./GlobalLink";
 
 export default function List({ i18n }) {
 	const router = useRouter();
@@ -46,9 +47,7 @@ export default function List({ i18n }) {
 		if (items && !items?.length) {
 			setopenModal(true);
 		}
-	}, [items?.length]);
-
-	console.log({ items });
+	}, [items]);
 
 	return (
 		<div className="flex flex-col overflow-auto h-screen md:border-r">
@@ -64,55 +63,55 @@ export default function List({ i18n }) {
 			<ul className="p-4 space-y-1">
 				{items?.map(({ title, uid, meta }) => {
 					const path = `/[lang]/nonce/[id]`;
-					const value = Object.keys(meta || {})
+					const value = Object.keys(meta || {})
 						.filter((key) => !meta?.[key].secret)
 						.map((key) => meta[key])[0]?.value;
 					return (
-						<li key={uid}>
-							<Link href={path} params={{ id: uid }}>
-								<a
-									className={`group p-2 hover:bg-gray-100 rounded-md flex items-center ${
-										router.query.id == uid ? "bg-gray-100" : ""
-									}`}
-								>
-									<svg width="40" viewBox="0 0 40 40" style={{ minWidth: 40 }}>
-										<rect
-											width="40"
-											height="40"
-											rx="10"
-											fill={stringToColour(title)}
-										/>
-										<circle cx="7" cy="7" r="2" fill="white" />
-										<circle cx="33" cy="7" r="2" fill="white" />
-										<circle cx="7" cy="33" r="2" fill="white" />
-										<circle cx="33" cy="33" r="2" fill="white" />
-									</svg>
-									<div className="ml-2">
+						<li
+							className={`relative group p-2 hover:bg-gray-100 rounded-md flex items-center focus-within:outline-black ${
+								router.query.id == uid ? "bg-gray-100" : ""
+							}`}
+							key={uid}
+						>
+							<svg width="40" viewBox="0 0 40 40" style={{ minWidth: 40 }}>
+								<rect
+									width="40"
+									height="40"
+									rx="10"
+									fill={stringToColour(title)}
+								/>
+								<circle cx="7" cy="7" r="2" fill="white" />
+								<circle cx="33" cy="7" r="2" fill="white" />
+								<circle cx="7" cy="33" r="2" fill="white" />
+								<circle cx="33" cy="33" r="2" fill="white" />
+							</svg>
+							<div className="ml-2">
+								<Link href={path} params={{ id: uid }}>
+									<GlobalLink hideFocus>
 										<Typography variant="h5" className="font-bold">
 											{title}
 										</Typography>
-										<Typography variant="sp" className="text-gray-600">
-											{value}
-										</Typography>
-									</div>
-									<button
-										className={`ml-auto w-10 h-10 rounded-full items-center text-gray-700 justify-center hover:bg-gray-200 ${
-											router.query.id == uid
-												? "flex"
-												: "hidden group-hover:flex"
-										}`}
-										onClick={() => {
-											initDb().then((db) =>
-												db.nonce.get({ uid }).then(() => {
-													goToRoute("/[lang]/nonce", router.query.lang);
-												})
-											);
-										}}
-									>
-										<Trash className="w-5 h-5" />
-									</button>
-								</a>
-							</Link>
+									</GlobalLink>
+								</Link>
+								<Typography variant="sp" className="text-gray-600">
+									{value}
+								</Typography>
+							</div>
+							<button
+								className={`relative z-10 ml-auto w-10 h-10 rounded-full items-center text-gray-700 justify-center hover:bg-gray-200 ${
+									router.query.id == uid ? "flex" : "hidden group-hover:flex"
+								}`}
+								onClick={() => {
+									initDb().then((db) => {
+										if (router.query.id === uid) {
+											goToRoute("/[lang]/nonce", router.query.lang);
+										}
+										db.nonce.where("uid").equals(uid).delete();
+									});
+								}}
+							>
+								<Trash className="w-5 h-5" />
+							</button>
 						</li>
 					);
 				})}

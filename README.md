@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Add encryption
+- [x] Add encryption
 - [ ] Add TOTP
 - [ ] Add words password
 - [ ] Add keyboard shortcut

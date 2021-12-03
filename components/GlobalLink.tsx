@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useState } from "react";
 
 export default forwardRef(function Link(
-	{ children, component = "a", ...props }: any,
+	{ children, component = "a", hideFocus, ...props }: any,
 	_
 ) {
 	const [selecting, setselecting] = useState(false);
@@ -26,7 +26,9 @@ export default forwardRef(function Link(
 
 	return (
 		<Component
-			className="before:absolute before:inset-0 before:z-0 before:content-[''] outline-none focus:before:outline-black"
+			className={`before:absolute before:inset-0 before:z-0 before:content-[''] outline-none ${
+				hideFocus ? "" : "focus:before:outline-black"
+			}`}
 			{...props}
 		>
 			{children}
