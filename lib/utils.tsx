@@ -42,7 +42,7 @@ export function goToRoute(to, lang, params = {}) {
 }
 
 export function stringToColour(stringInput: string) {
-	let stringUniqueHash = [...stringInput].reduce((acc, char) => {
+	let stringUniqueHash = [...(stringInput || "")].reduce((acc, char) => {
 		return char.charCodeAt(0) + ((acc << 5) - acc);
 	}, 0);
 	return `hsl(${stringUniqueHash % 360}, 95%, 35%)`;
@@ -90,12 +90,16 @@ function encryptWithAES(passphrase: string, text: string) {
 }
 
 function decryptWithAES(passphrase: string, ciphertext: string) {
-	const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
-	const originalText = bytes.toString(CryptoJS.enc.Utf8);
-	return originalText;
+	try {
+		const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
+		const originalText = bytes.toString(CryptoJS.enc.Utf8);
+		return originalText;
+	} catch (e) {
+		return "";
+	}
 }
 
 export const encryption = (pass) => ({
 	encrypt: (values) => encryptWithAES(pass, JSON.stringify(values)),
-	decrypt: (data) => data && JSON.parse(decryptWithAES(pass, data)),
+	decrypt: (data) => data && JSON.parse(decryptWithAES(pass, data) || "{}"),
 });

@@ -33,11 +33,8 @@ class NoncesDb extends Dexie {
 const { name, secret } = window["___TEMP_DB_DATA___"];
 const db = new NoncesDb(name);
 const tables = ["nonces", "nonce"];
-console.log(secret);
 
-if (secret) {
-	middleware({ db, encryption: encryption(secret || ""), tables });
-}
+middleware({ db, encryption: encryption(secret || ""), tables });
 db.version(2).stores({
 	nonces: "++id",
 	nonce: "++id, noncesId, title, uid",

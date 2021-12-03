@@ -44,7 +44,7 @@ export default function Credential({ onBack, name, onLogin, i18n }) {
 						<input
 							className="w-full rounded-md p-2 bg-gray-200"
 							autoFocus
-							{...register("secret")}
+							{...register("secret", { required: !storedSecret })}
 						/>
 					</div>
 				) : null}
@@ -61,7 +61,7 @@ export default function Credential({ onBack, name, onLogin, i18n }) {
 						className="w-full rounded-md p-2 bg-gray-200"
 						type="password"
 						autoFocus
-						{...register("password", { required: !!(storedSecret || secret) })}
+						{...register("password", { required: true })}
 					/>
 				</div>
 				<footer>

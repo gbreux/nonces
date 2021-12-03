@@ -20,19 +20,23 @@ export default function List({ i18n }) {
 		const result = await db?.nonce?.toArray();
 		if (search) {
 			const searchResult = result.filter(({ title, meta }) => {
-				return (
-					title.toLowerCase().indexOf(search) >= 0 ||
-					Object.keys(meta).filter((key) => {
-						return (
-							!meta[key]?.secret &&
-							meta[key]?.value?.toLowerCase().indexOf(search) >= 0
-						);
-					}).length > 0
-				);
+				if (meta) {
+					return (
+						title.toLowerCase().indexOf(search) >= 0 ||
+						Object.keys(meta).filter((key) => {
+							return (
+								!meta[key]?.secret &&
+								meta[key]?.value?.toLowerCase().indexOf(search) >= 0
+							);
+						}).length > 0
+					);
+				} else {
+					return [];
+				}
 			});
 			return [...(searchResult || [])];
 		} else {
-			return [...(result || [])];
+			return [...(result || [])].filter(({ meta }) => !!meta);
 		}
 	}, [search]);
 
@@ -68,7 +72,7 @@ export default function List({ i18n }) {
 						.map((key) => meta[key])[0]?.value;
 					return (
 						<li
-							className={`relative group p-2 hover:bg-gray-100 rounded-md flex items-center focus-within:outline-black ${
+							className={`relative group p-2 hover:bg-gray-100 rounded-md flex items-center focus-within:bg-gray-100 ${
 								router.query.id == uid ? "bg-gray-100" : ""
 							}`}
 							key={uid}

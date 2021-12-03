@@ -10,8 +10,8 @@
 				"login": "Unlock",
 				"create": "Create a new vault",
 				"labels": {
-					"secret": "Clef secret",
-					"password": "Mot de passe"
+					"secret": "Secret key",
+					"password": "Password"
 				},
 				"errors": {
 					"WRONG_PASSWORD": "Wrong password"

@@ -118,7 +118,7 @@ export default function AddNonceDialog({
 				</div>
 				{fields.map((field, index) => {
 					return (
-						<fieldset
+						<div
 							className="flex justify-between items-center border p-2 mb-4 rounded-md outline-none hover:bg-gray-50 focus:bg-gray-50"
 							key={field.id}
 						>
@@ -203,7 +203,7 @@ export default function AddNonceDialog({
 									<Trash className="w-5 h-5" />
 								</button>
 							</aside>
-						</fieldset>
+						</div>
 					);
 				})}
 				<footer className="flex justify-between mt-12">
