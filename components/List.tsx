@@ -8,15 +8,13 @@ import Link from "components/Link";
 import Trash from "components/Icons/Trash";
 import NonceDialog from "components/Dialog/NonceDialog";
 import { goToRoute, stringToColour } from "lib/utils";
-import initDb from "models/db";
 import GlobalLink from "./GlobalLink";
 
-export default function List({ i18n }) {
+export default function List({ i18n, db }) {
 	const router = useRouter();
 	const [search, setsearch] = useState("");
 	const [openModal, setopenModal] = useState(false);
 	const items = useLiveQuery(async () => {
-		const db = await initDb();
 		const result = await db?.nonce?.toArray();
 		if (search) {
 			const searchResult = result.filter(({ title, meta }) => {
@@ -66,7 +64,7 @@ export default function List({ i18n }) {
 			</form>
 			<ul className="p-4 space-y-1">
 				{items?.map(({ title, uid, meta }) => {
-					const path = `/[lang]/nonce/[id]`;
+					const path = `/[lang]/nonce?id=${uid}`;
 					const value = Object.keys(meta || {})
 						.filter((key) => !meta?.[key].secret)
 						.map((key) => meta[key])[0]?.value;
@@ -90,7 +88,7 @@ export default function List({ i18n }) {
 								<circle cx="33" cy="33" r="2" fill="white" />
 							</svg>
 							<div className="ml-2">
-								<Link href={path} params={{ id: uid }}>
+								<Link href={path}>
 									<GlobalLink hideFocus>
 										<Typography variant="h5" className="font-bold">
 											{title}
@@ -106,12 +104,10 @@ export default function List({ i18n }) {
 									router.query.id == uid ? "flex" : "hidden group-hover:flex"
 								}`}
 								onClick={() => {
-									initDb().then((db) => {
-										if (router.query.id === uid) {
-											goToRoute("/[lang]/nonce", router.query.lang);
-										}
-										db.nonce.where("uid").equals(uid).delete();
-									});
+									if (router.query.id === uid) {
+										goToRoute("/[lang]/nonce", router.query.lang);
+									}
+									db.nonce.where("uid").equals(uid).delete();
 								}}
 							>
 								<Trash className="w-5 h-5" />
@@ -129,10 +125,8 @@ export default function List({ i18n }) {
 					isOpen={openModal}
 					close={() => setopenModal(false)}
 					onSubmit={(item) => {
-						initDb().then((db) => db.nonce.add({ ...item }));
-						goToRoute("/[lang]/nonce/[id]", router.query.lang, {
-							id: item.uid,
-						});
+						db.nonce.add({ ...item });
+						goToRoute(`/[lang]/nonce?id=${item.uid}`, router.query.lang);
 					}}
 				/>
 			</footer>

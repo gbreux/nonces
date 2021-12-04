@@ -1,27 +1,15 @@
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Typography from "components/Typography";
 import Button from "components/Button";
 import SvgBack from "components/Icons/ArrowLeft";
-import { encryption } from "lib/utils";
 
-export default function Credential({ onBack, name, onLogin, i18n }) {
-	const [error, seterror] = useState("");
-	const [storedSecret, setstoredSecret] = useState("_");
-	const { register, handleSubmit, watch, setValue } = useForm({
+export default function Credential({ onBack, name, error, onLogin, i18n }) {
+	const { register, handleSubmit } = useForm({
 		defaultValues: {
 			password: "",
-			secret: "",
 		},
 	});
-	const { secret } = watch();
-
-	useEffect(() => {
-		setstoredSecret(
-			JSON.parse(sessionStorage.getItem(`DB__${name}`) || "{}")?.secret || ""
-		);
-	}, [setValue, name]);
 
 	return (
 		<section>
@@ -36,18 +24,6 @@ export default function Credential({ onBack, name, onLogin, i18n }) {
 				</Typography>
 			</header>
 			<form onSubmit={handleSubmit(login)}>
-				{!storedSecret ? (
-					<div className="mb-2">
-						<Typography variant="h4" className="font-bold">
-							{i18n.labels.secret}
-						</Typography>
-						<input
-							className="w-full rounded-md p-2 bg-gray-200"
-							autoFocus
-							{...register("secret", { required: !storedSecret })}
-						/>
-					</div>
-				) : null}
 				<div className="mb-7">
 					<Typography variant="h4" className="font-bold">
 						{i18n.labels.password}
@@ -70,16 +46,10 @@ export default function Credential({ onBack, name, onLogin, i18n }) {
 			</form>
 		</section>
 	);
-	function login(values) {
-		try {
-			const secret =
-				values.secret || encryption(values.password).decrypt(storedSecret);
-			onLogin({
-				name,
-				secret,
-			});
-		} catch (e) {
-			seterror("WRONG_PASSWORD");
-		}
+	function login({ password }) {
+		onLogin({
+			name,
+			password,
+		});
 	}
 }

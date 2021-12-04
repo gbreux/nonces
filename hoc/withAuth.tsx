@@ -1,10 +1,14 @@
-import Dexie from "dexie";
 import { useCallback, useEffect, useState } from "react";
+import middleware from "dexie-easy-encrypt";
+import Dexie from "dexie";
 
 import CreateDb from "components/withAuth/CreateDb";
 import ListDb from "components/withAuth/ListDb";
 import Credential from "components/withAuth/Credential";
 import { encryption } from "lib/utils";
+import NoncesDb from "models/db";
+
+const currentVersion = 2;
 
 export default function withAuth(Component) {
 	return function Auth(props) {
@@ -13,16 +17,11 @@ export default function withAuth(Component) {
 		>("loading");
 		const [selectedDb, setselectedDb] = useState<string>("");
 		const [databases, setdatabases] = useState<string[]>([]);
+		const [db, setdb] = useState<any>();
 		const [errors, seterrors] = useState<{ [key: string]: string }>({});
-		const [openVault, setopenVault] = useState(
-			typeof window !== "undefined" && window["___TEMP_DB_DATA___"]
-		);
-		const vaultData =
-			typeof window !== "undefined" ? window["___TEMP_DB_DATA___"] : {};
 		const checkStep = useCallback(() => {
 			Dexie.getDatabaseNames().then((db) => {
 				setdatabases(db);
-				console.log(db.length);
 				switch (db.length) {
 					case 0: {
 						setstep("creating");
@@ -47,8 +46,8 @@ export default function withAuth(Component) {
 
 		return (
 			<div>
-				{openVault ? (
-					<Component dbData={{ ...vaultData }} onLogout={logout} {...props} />
+				{!!db ? (
+					<Component db={db} onLogout={logout} {...props} />
 				) : (
 					<section className="bg-gray-800 w-full h-screen flex items-start justify-center">
 						{step === "loading" ? null : (
@@ -79,6 +78,7 @@ export default function withAuth(Component) {
 										i18n={props.i18n.WithAuth.Components.Credential}
 										onLogin={login}
 										name={selectedDb}
+										error={errors.credential}
 										onBack={() =>
 											databases.length ? setstep("list") : setstep("creating")
 										}
@@ -91,38 +91,65 @@ export default function withAuth(Component) {
 			</div>
 		);
 
-		function login(values) {
+		async function login({ name, password }) {
 			try {
-				openDb(values.name, values.secret);
+				const db = new NoncesDb(name);
+				db.version(currentVersion).stores({ __encryption_check__: "++id" });
+				await db.open();
+				const key = await db.__encryption_check__.orderBy("id").first();
+				const secret = encryption(password).decrypt(key?.secret);
+				db.close();
+				openDb(name, secret, currentVersion);
 			} catch (e) {
 				seterrors({ credential: "WRONG_PASSWORD" });
 			}
 		}
 
 		function logout() {
-			delete window["___TEMP_DB_DATA___"];
 			checkStep();
 		}
-		async function openDb(name: string, secret = "") {
-			window["___TEMP_DB_DATA___"] = {
-				name,
-				secret,
-			};
-			setopenVault(true);
+		async function openDb(name: string, secret = "", version = currentVersion) {
+			const db = new NoncesDb(name);
+			const tables = ["nonces", "nonce"];
+			middleware({
+				db,
+				encryption: encryption(secret),
+				tables,
+			});
+
+			db.version(version).stores({
+				__encryption_check__: "++id",
+				nonces: "++id",
+				nonce: "++id, noncesId, title, uid",
+			});
+
+			await db.open();
+			await persist();
+
+			setdb(db);
 		}
-		function createDb(values) {
-			if (values.password) {
-				sessionStorage.setItem(
-					`DB__${values.title}`,
-					JSON.stringify({
-						secret: encryption(values.password).encrypt(values.secret),
-					})
-				);
-			}
-			openDb(values.title, values.password ? values.secret : null);
+		async function persist() {
+			return (
+				(await navigator.storage) &&
+				navigator.storage.persist &&
+				navigator.storage.persist()
+			);
+		}
+		async function createDb(values) {
+			const db = new NoncesDb(values.title);
+			db.version(currentVersion - 1).stores({
+				__encryption_check__: "++id",
+				nonces: "++id",
+				nonce: "++id, noncesId, title, uid",
+			});
+			await db.open();
+			await db.__encryption_check__.add({
+				secret: encryption(values.password).encrypt(values.secret),
+			});
+			db.close();
+			openDb(values.title, values.secret, currentVersion);
 		}
 		function deleteDb(db) {
-			sessionStorage.removeItem(`DB__${db}`);
 			Dexie.delete(db);
 			Dexie.getDatabaseNames().then(setdatabases);
 			checkStep();

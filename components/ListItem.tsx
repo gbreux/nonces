@@ -11,13 +11,11 @@ import Typography from "components/Typography";
 import { stringToColour } from "lib/utils";
 import initDb from "models/db";
 
-export default function ListItem({ i18n }) {
+export default function ListItem({ i18n, db }) {
 	const [openNonceDialog, setopenNonceDialog] = useState(false);
 	const [copied, setcopied] = useState("");
 	const router = useRouter();
-	// const item = [];
 	const item = useLiveQuery(async () => {
-		const db = await initDb();
 		return await db
 			?.table("nonce")
 			?.filter(({ uid }) => {
@@ -25,6 +23,10 @@ export default function ListItem({ i18n }) {
 			})
 			.toArray();
 	}, [router.query.id])?.[0];
+
+	if (!item) {
+		return null;
+	}
 
 	return (
 		<div className="flex flex-col overflow-auto h-screen">
@@ -129,13 +131,11 @@ export default function ListItem({ i18n }) {
 				isOpen={openNonceDialog}
 				close={() => setopenNonceDialog(false)}
 				defaultValues={item}
-				onSubmit={async (item) => {
-					await initDb().then((db) =>
-						db.nonce
-							.where("uid")
-							.equals(router.query.id || "")
-							.modify({ ...item })
-					);
+				onSubmit={(item) => {
+					db.nonce
+						.where("uid")
+						.equals(router.query.id || "")
+						.modify({ ...item });
 				}}
 			/>
 		</div>

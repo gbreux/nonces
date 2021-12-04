@@ -26,7 +26,7 @@ export default function AddDb({ createDb, onBack, i18n }) {
 		<form onSubmit={handleSubmit(createDb)}>
 			<header className="mb-7 space-x-4 flex items-center">
 				{onBack ? (
-					<button onClick={() => onBack()}>
+					<button type="button" onClick={() => onBack()}>
 						<SvgBack className="w-7 h-7" />
 					</button>
 				) : null}
@@ -42,53 +42,6 @@ export default function AddDb({ createDb, onBack, i18n }) {
 					{...register("title", { required: true })}
 				/>
 			</div>
-			<div className="mb-2">
-				<Typography variant="h4" className="font-bold">
-					{i18n.labels.secret}
-				</Typography>
-				<Typography className="mb-2">{i18n.placeholders.secret}</Typography>
-				<div className="flex space-x-2">
-					<div
-						className="w-full relative whitespace-nowrap overflow-hidden overflow-ellipsis p-2 pr-10 rounded-md last:border-none cursor-pointer bg-gray-200 hover:bg-gray-300"
-						onClick={() => {
-							navigator.clipboard.writeText(secret);
-							setcopied("mnemonic");
-							setTimeout(() => setcopied(""), 3000);
-						}}
-					>
-						{secret}
-						<aside className="absolute flex items-center right-0 top-0 bottom-0">
-							{copied === "mnemonic" ? (
-								<Typography
-									variant="sp"
-									className=" text-green-500 font-bold px-2 bg-gray-200 h-full flex items-center"
-								>
-									{i18n.copied}
-								</Typography>
-							) : (
-								<button
-									type="button"
-									className="w-10 h-full flex items-center justify-center hover:bg-gray-200 focus:bg-gray-200"
-								>
-									<SvgCopy
-										className="w-5 h-full text-gray-700"
-										titleId={`Copy`}
-										title={`Copy secret`}
-									/>
-								</button>
-							)}
-						</aside>
-					</div>
-					<Button
-						type="button"
-						onClick={() => {
-							setValue("secret", getMnemonic());
-						}}
-					>
-						{i18n.change}
-					</Button>
-				</div>
-			</div>
 			<div className="mb-7">
 				<Typography variant="h4" className="font-bold">
 					{i18n.labels.password}
@@ -101,7 +54,7 @@ export default function AddDb({ createDb, onBack, i18n }) {
 				/>
 			</div>
 			<footer>
-				<Button onClick={() => {}}>{i18n.create}</Button>
+				<Button>{i18n.create}</Button>
 			</footer>
 		</form>
 	);

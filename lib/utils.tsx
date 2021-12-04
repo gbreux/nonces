@@ -90,16 +90,12 @@ function encryptWithAES(passphrase: string, text: string) {
 }
 
 function decryptWithAES(passphrase: string, ciphertext: string) {
-	try {
-		const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
-		const originalText = bytes.toString(CryptoJS.enc.Utf8);
-		return originalText;
-	} catch (e) {
-		return "";
-	}
+	const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
+	const originalText = bytes.toString(CryptoJS.enc.Utf8);
+	return originalText;
 }
 
 export const encryption = (pass) => ({
 	encrypt: (values) => encryptWithAES(pass, JSON.stringify(values)),
-	decrypt: (data) => data && JSON.parse(decryptWithAES(pass, data) || "{}"),
+	decrypt: (data) => data && JSON.parse(decryptWithAES(pass, data)),
 });
