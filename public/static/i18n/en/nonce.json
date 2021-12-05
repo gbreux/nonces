@@ -1,101 +1,117 @@
 {
-	"meta": {
-		"title": "Nonce",
-		"description": "Take back control of your online presence with an easy to use password manager"
-	},
-	"WithAuth": {
-		"Components": {
-			"Credential": {
-				"title": "Unlock {name}",
-				"login": "Unlock",
-				"create": "Create a new vault",
-				"labels": {
-					"secret": "Secret key",
-					"password": "Password"
-				},
-				"errors": {
-					"WRONG_PASSWORD": "Wrong password"
-				}
-			},
-			"ListDb": { "title": "Chose a vault", "create": "Create" },
-			"CreateDb": {
-				"title": "Create a vault",
-				"copied": "Copied!",
-				"change": "Change",
-				"create": "Create",
-				"labels": {
-					"name": "Name",
-					"secret": "Secret key",
-					"password": "Password"
-				},
-				"placeholders": {
-					"name": "For later reference and must be unique!",
-					"secret": "Make sure you store it somewhere safe. You will need it to access you passwords. No keys, no passwords.",
-					"password": "The only password you should know by heart."
-				}
-			}
-		}
-	},
-	"Components": {
-		"ListItem": {
-			"copied": "Copied!",
-			"Components": {
-				"NonceDialog": {
-					"labels": {
-						"login": "Login",
-						"password": "Password",
-						"website": "Website",
-						"other": "Other"
-					},
-					"placeholders": {
-						"title": "Title",
-						"password": "Generate a password",
-						"other": "Anything you want, fill in to add another field"
-					},
-					"submit": "Update Nonce",
-					"cancel": "Cancel",
-					"reset": "Reset",
-					"Components": {
-						"GeneratePassword": {
-							"special": "Special",
-							"regen": "Regenerate",
-							"uppercase": "Uppercase",
-							"number": "Number",
-							"validate": "Validate"
-						}
-					}
-				}
-			}
-		},
-		"List": {
-			"cta": "Add a nonce",
-			"Components": {
-				"NonceDialog": {
-					"labels": {
-						"login": "Login",
-						"password": "Password",
-						"website": "Website",
-						"other": "Other"
-					},
-					"placeholders": {
-						"title": "Title",
-						"password": "Generate a password",
-						"other": "Anything you want, fill in to add another field"
-					},
-					"submit": "Create Nonce",
-					"cancel": "Cancel",
-					"reset": "Reset",
-					"Components": {
-						"GeneratePassword": {
-							"special": "Special",
-							"regen": "Regenerate",
-							"uppercase": "Uppercase",
-							"number": "Number",
-							"validate": "Validate"
-						}
-					}
-				}
-			}
-		}
-	}
+    "meta": {
+        "title": "Nonce",
+        "description": "Take back control of your online presence with an easy to use password manager"
+    },
+    "WithAuth": {
+        "Components": {
+            "Credential": {
+                "title": "Unlock {name}",
+                "login": "Unlock",
+                "create": "Create a new vault",
+                "labels": {
+                    "secret": "Secret key",
+                    "password": "Password"
+                },
+                "errors": {
+                    "WRONG_PASSWORD": "Wrong password"
+                }
+            },
+            "ListDb": { "title": "Chose a vault", "create": "Create" },
+            "CreateDb": {
+                "title": "Create a vault",
+                "copied": "Copied!",
+                "change": "Change",
+                "create": "Create",
+                "labels": {
+                    "name": "Name",
+                    "secret": "Secret key",
+                    "password": "Password"
+                },
+                "placeholders": {
+                    "name": "For later reference and must be unique!",
+                    "secret": "Make sure you store it somewhere safe. You will need it to access you passwords. No keys, no passwords.",
+                    "password": "The only password you should know by heart."
+                }
+            }
+        }
+    },
+    "Components": {
+        "ListItem": {
+            "copied": "Copied!",
+            "Components": {
+                "NonceDialog": {
+                    "labels": {
+                        "login": "Login",
+                        "password": "Password",
+                        "website": "Website",
+                        "other": "Other"
+                    },
+                    "placeholders": {
+                        "title": "Title",
+                        "password": "Generate a password",
+                        "other": "Anything you want, fill in to add another field"
+                    },
+                    "submit": "Update Nonce",
+                    "cancel": "Cancel",
+                    "reset": "Reset",
+                    "Components": {
+                        "GeneratePassword": {
+                            "special": "Special",
+                            "regen": "Regenerate",
+                            "uppercase": "Uppercase",
+                            "number": "Number",
+                            "validate": "Validate"
+                        }
+                    }
+                },
+                "ConfirmationDialog": {
+                    "placeholders": {
+                        "title": "Delete Nonce ?",
+                        "subtitle": "Do you really want to delete the nonce, This step cannot be undone. Your data cannot be recovered"
+                    },
+                    "cancel": "Cancel",
+                    "delete": "Yes, Delete"
+                }
+            }
+        },
+        "List": {
+            "cta": "Add a nonce",
+            "Components": {
+                "NonceDialog": {
+                    "labels": {
+                        "login": "Login",
+                        "password": "Password",
+                        "website": "Website",
+                        "other": "Other"
+                    },
+                    "placeholders": {
+                        "title": "Title",
+                        "password": "Generate a password",
+                        "other": "Anything you want, fill in to add another field"
+                    },
+                    "submit": "Create Nonce",
+                    "cancel": "Cancel",
+                    "reset": "Reset",
+                    "Components": {
+                        "GeneratePassword": {
+                            "special": "Special",
+                            "regen": "Regenerate",
+                            "uppercase": "Uppercase",
+                            "number": "Number",
+                            "validate": "Validate"
+                        }
+                    }
+                },
+                "ConfirmationDialog": {
+                    "placeholders": {
+                        "title": "Delete Nonce ?",
+                        "subtitle": "Do you really want to delete the nonce, This step cannot be undone. Your data cannot be recovered"
+                    },
+                    "cancel": "Cancel",
+                    "delete": "Yes, Delete"
+                }
+            }
+        }
+    }
 }
