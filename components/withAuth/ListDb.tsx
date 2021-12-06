@@ -29,7 +29,7 @@ export default function ListDb({
 								}}
 								key={db}
 							>
-								{db}
+								{db.replace(/^getnonces.com__/, "")}
 							</GlobalLink>
 							<button
 								className="w-10 h-10 rounded-full hover:bg-gray-200 z-10 flex items-center justify-center"

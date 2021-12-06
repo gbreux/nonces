@@ -20,7 +20,7 @@ export default function Credential({ onBack, name, error, onLogin, i18n }) {
 					</button>
 				) : null}
 				<Typography variant="h1">
-					{i18n.title.replace("{name}", name)}
+					{i18n.title.replace("{name}", name.replace(/^getnonces.com__/, ""))}
 				</Typography>
 			</header>
 			<form onSubmit={handleSubmit(login)}>

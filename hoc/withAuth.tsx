@@ -20,24 +20,28 @@ export default function withAuth(Component) {
 		const [db, setdb] = useState<any>();
 		const [errors, seterrors] = useState<{ [key: string]: string }>({});
 		const checkStep = useCallback(() => {
-			Dexie.getDatabaseNames().then((db) => {
-				setdatabases(db);
-				switch (db.length) {
-					case 0: {
-						setstep("creating");
-						break;
+			Dexie.getDatabaseNames()
+				.then((db) => {
+					return db.filter((name) => /^getnonces.com__/.test(name));
+				})
+				.then((db) => {
+					setdatabases(db);
+					switch (db.length) {
+						case 0: {
+							setstep("creating");
+							break;
+						}
+						case 1: {
+							setselectedDb(db[0]);
+							setstep("credential");
+							break;
+						}
+						default: {
+							setstep("list");
+							break;
+						}
 					}
-					case 1: {
-						setselectedDb(db[0]);
-						setstep("credential");
-						break;
-					}
-					default: {
-						setstep("list");
-						break;
-					}
-				}
-			});
+				});
 		}, []);
 
 		useEffect(() => {
@@ -136,7 +140,8 @@ export default function withAuth(Component) {
 			);
 		}
 		async function createDb(values) {
-			const db = new NoncesDb(values.title);
+			const dbName = `getnonces.com__${values.title}`;
+			const db = new NoncesDb(dbName);
 			db.version(currentVersion - 1).stores({
 				__encryption_check__: "++id",
 				nonces: "++id",
@@ -147,7 +152,7 @@ export default function withAuth(Component) {
 				secret: encryption(values.password).encrypt(values.secret),
 			});
 			db.close();
-			openDb(values.title, values.secret, currentVersion);
+			openDb(dbName, values.secret, currentVersion);
 		}
 		function deleteDb(db) {
 			Dexie.delete(db);

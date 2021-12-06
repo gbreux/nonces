@@ -2,6 +2,7 @@
 
 - [x] Add encryption
 - [ ] Add TOTP
+- [ ] Add import/export
 - [ ] Add words password
 - [ ] Add keyboard shortcut
 - [ ] Add drapNdrop
