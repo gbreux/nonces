@@ -22,7 +22,10 @@ export default function Modal({
 			overlayClassName="fixed inset-0 items-start md:p-4 justify-center flex h-full overflow-auto z-50 cursor-pointer bg-gray-900 bg-opacity-90"
 			{...props}
 		>
-			<div style={{ borderRadius: "inherit" }} className="p-4 md:p-7">
+			<div
+				style={{ borderRadius: "inherit" }}
+				className="p-4 md:p-7 h-full"
+			>
 				{children}
 				{close && !hideCloseButton ? (
 					<button

@@ -49,11 +49,18 @@ export default function ListItem({ i18n, db }) {
 					</Typography>
 					{Object.keys(item?.meta || {})
 						.filter(
-							(key) => (item?.meta[key]?.value || "")?.indexOf("http") >= 0
+							(key) =>
+								(item?.meta[key]?.value || "")?.indexOf(
+									"http"
+								) >= 0
 						)
 						.map((key) => {
 							return (
-								<Typography key={key} variant="sp" className="text-gray-600">
+								<Typography
+									key={key}
+									variant="sp"
+									className="text-gray-600"
+								>
 									{item?.meta[key]?.value}
 								</Typography>
 							);
@@ -72,7 +79,8 @@ export default function ListItem({ i18n, db }) {
 			<section className="px-4">
 				<ul className="rounded-lg border overflow-hidden">
 					{Object.keys(item?.meta || {}).map((key, index) => {
-						const { value = "", secret = false } = item?.meta[key] || {};
+						const { value = "", secret = false } =
+							item?.meta[key] || {};
 						return (
 							<li
 								className="relative p-2 border-b last:border-none cursor-pointer hover:bg-gray-100"
@@ -99,7 +107,10 @@ export default function ListItem({ i18n, db }) {
 										<Link className="w-4 h-4 ml-1" />
 									</Typography>
 								) : (
-									<Typography variant="sp" className="text-gray-600">
+									<Typography
+										variant="sp"
+										className="text-gray-600"
+									>
 										{secret ? "••••••••" : value}
 									</Typography>
 								)}

@@ -64,6 +64,14 @@
 							"validate": "Validate"
 						}
 					}
+				},
+				"ConfirmationDialog": {
+					"placeholders": {
+						"title": "Delete Nonce ?",
+						"subtitle": "Do you really want to delete the nonce, This step cannot be undone. Your data cannot be recovered"
+					},
+					"cancel": "Cancel",
+					"delete": "Yes, Delete"
 				}
 			}
 		},
@@ -94,6 +102,14 @@
 							"validate": "Validate"
 						}
 					}
+				},
+				"ConfirmationDialog": {
+					"placeholders": {
+						"title": "Delete Nonce ?",
+						"subtitle": "Do you really want to delete the nonce, This step cannot be undone. Your data cannot be recovered"
+					},
+					"cancel": "Cancel",
+					"delete": "Yes, Delete"
 				}
 			}
 		}

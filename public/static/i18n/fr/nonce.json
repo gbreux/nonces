@@ -64,6 +64,14 @@
 							"validate": "Valider"
 						}
 					}
+				},
+				"ConfirmationDialog": {
+					"placeholders": {
+						"title": "Effacer Nonce ?",
+						"subtitle": "Voulez-vous vraiment supprimer le nonce, cette étape ne peut pas être annulée. Vos données ne peuvent pas être récupérées"
+					},
+					"cancel": "Annuler",
+					"delete": "Uui, Effacer"
 				}
 			}
 		},
@@ -94,6 +102,14 @@
 							"validate": "Valider"
 						}
 					}
+				},
+				"ConfirmationDialog": {
+					"placeholders": {
+						"title": "Effacer Nonce ?",
+						"subtitle": "Voulez-vous vraiment supprimer le nonce, cette étape ne peut pas être annulée. Vos données ne peuvent pas être récupérées"
+					},
+					"cancel": "Annuler",
+					"delete": "Uui, Effacer"
 				}
 			}
 		}

@@ -9,11 +9,13 @@ import Trash from "components/Icons/Trash";
 import NonceDialog from "components/Dialog/NonceDialog";
 import { goToRoute, stringToColour } from "lib/utils";
 import GlobalLink from "./GlobalLink";
+import ConfirmationDialog from "./Dialog/ConfirmationDialog";
 
 export default function List({ i18n, db }) {
 	const router = useRouter();
 	const [search, setsearch] = useState("");
 	const [openModal, setopenModal] = useState(false);
+	const [openConfirmation, setopenConfirmation] = useState(false);
 	const items = useLiveQuery(async () => {
 		const result = await db?.nonce?.toArray();
 		if (search) {
@@ -24,7 +26,9 @@ export default function List({ i18n, db }) {
 						Object.keys(meta).filter((key) => {
 							return (
 								!meta[key]?.secret &&
-								meta[key]?.value?.toLowerCase().indexOf(search) >= 0
+								meta[key]?.value
+									?.toLowerCase()
+									.indexOf(search) >= 0
 							);
 						}).length > 0
 					);
@@ -53,7 +57,7 @@ export default function List({ i18n, db }) {
 
 	return (
 		<div className="flex flex-col overflow-auto h-screen md:border-r">
-			<form className="p-4 sticky top-0 bg-gray-100 border-b ">
+			<form className="p-4 sticky top-0 bg-gray-100 border-b z-10">
 				<input
 					className="rounded-lg bg-white border w-full py-2 px-4 focus:outline-none"
 					placeholder="i.e Google"
@@ -75,7 +79,11 @@ export default function List({ i18n, db }) {
 							}`}
 							key={uid}
 						>
-							<svg width="40" viewBox="0 0 40 40" style={{ minWidth: 40 }}>
+							<svg
+								width="40"
+								viewBox="0 0 40 40"
+								style={{ minWidth: 40 }}
+							>
 								<rect
 									width="40"
 									height="40"
@@ -90,33 +98,51 @@ export default function List({ i18n, db }) {
 							<div className="ml-2">
 								<Link href={path}>
 									<GlobalLink hideFocus>
-										<Typography variant="h5" className="font-bold">
+										<Typography
+											variant="h5"
+											className="font-bold"
+										>
 											{title}
 										</Typography>
 									</GlobalLink>
 								</Link>
-								<Typography variant="sp" className="text-gray-600">
+								<Typography
+									variant="sp"
+									className="text-gray-600"
+								>
 									{value}
 								</Typography>
 							</div>
 							<button
-								className={`relative z-10 ml-auto w-10 h-10 rounded-full items-center text-gray-700 justify-center hover:bg-gray-200 ${
-									router.query.id == uid ? "flex" : "hidden group-hover:flex"
+								className={`relative z-10 ml-auto w-10 h-10 rounded-full items-center text-gray-700 justify-center hover:bg-gray-200 hover:text-red-500 ${
+									router.query.id == uid
+										? "flex"
+										: "hidden group-hover:flex"
 								}`}
-								onClick={() => {
-									if (router.query.id === uid) {
-										goToRoute("/[lang]/nonce", router.query.lang);
-									}
-									db.nonce.where("uid").equals(uid).delete();
-								}}
+								onClick={() => setopenConfirmation(true)}
 							>
 								<Trash className="w-5 h-5" />
 							</button>
+							<ConfirmationDialog
+								isOpen={openConfirmation}
+								close={() => setopenConfirmation(false)}
+								onSubmit={() => {
+									if (router.query.id === uid) {
+										goToRoute(
+											"/[lang]/nonce",
+											router.query.lang
+										);
+									}
+									db.nonce.where("uid").equals(uid).delete();
+									setopenConfirmation(false);
+								}}
+								i18n={i18n.Components.ConfirmationDialog}
+							/>
 						</li>
 					);
 				})}
 			</ul>
-			<footer className="bg-white sticky bottom-0 p-4 mt-auto">
+			<footer className="bg-white sticky bottom-0 p-4 mt-auto z-10">
 				<Button className="w-full" onClick={() => setopenModal(true)}>
 					{i18n.cta}
 				</Button>
@@ -126,7 +152,10 @@ export default function List({ i18n, db }) {
 					close={() => setopenModal(false)}
 					onSubmit={(item) => {
 						db.nonce.add({ ...item });
-						goToRoute(`/[lang]/nonce?id=${item.uid}`, router.query.lang);
+						goToRoute(
+							`/[lang]/nonce?id=${item.uid}`,
+							router.query.lang
+						);
 					}}
 				/>
 			</footer>
@@ -142,9 +171,11 @@ function isElementInViewport(el) {
 		rect.right > 0 &&
 		rect.left <
 			(window.innerWidth ||
-				document.documentElement.clientWidth) /* or $(window).width() */ &&
+				document.documentElement
+					.clientWidth) /* or $(window).width() */ &&
 		rect.top <
 			(window.innerHeight ||
-				document.documentElement.clientHeight) /* or $(window).height() */
+				document.documentElement
+					.clientHeight) /* or $(window).height() */
 	);
 }

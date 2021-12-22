@@ -55,12 +55,14 @@ export default function AddNonceDialog({
 		],
 		[i18n.labels, i18n.placeholders]
 	);
-	const { control, register, reset, handleSubmit, watch, setValue } = useForm({
-		defaultValues: {
-			title: "",
-			meta: defaultMeta,
-		},
-	});
+	const { control, register, reset, handleSubmit, watch, setValue } = useForm(
+		{
+			defaultValues: {
+				title: "",
+				meta: defaultMeta,
+			},
+		}
+	);
 	const resetToDefault = useCallback(() => {
 		const meta = Object.keys(defaultValues?.meta || {});
 		reset({
@@ -107,7 +109,10 @@ export default function AddNonceDialog({
 
 	return (
 		<Dialog isOpen={isOpen} close={close}>
-			<form data-rel="add-nonce-dialog-form" onSubmit={handleSubmit(submit)}>
+			<form
+				data-rel="add-nonce-dialog-form"
+				onSubmit={handleSubmit(submit)}
+			>
 				<div className="pr-10">
 					<input
 						autoFocus
@@ -151,9 +156,15 @@ export default function AddNonceDialog({
 										}`}
 										autoComplete="off"
 										placeholder={meta[index].placeholder}
-										onFocus={() => setValue(`meta.${index}.hide`, "")}
+										onFocus={() =>
+											setValue(`meta.${index}.hide`, "")
+										}
 										{...register(`meta.${index}.value`, {
-											onBlur: () => setValue(`meta.${index}.hide`, "••••••••"),
+											onBlur: () =>
+												setValue(
+													`meta.${index}.hide`,
+													"••••••••"
+												),
 										})}
 									/>
 								</div>
@@ -170,7 +181,9 @@ export default function AddNonceDialog({
 											onChange: (e) => {
 												setValue(
 													`meta.${index}.hide`,
-													e.target.checked ? "••••••••" : ""
+													e.target.checked
+														? "••••••••"
+														: ""
 												);
 											},
 										})}
@@ -185,10 +198,16 @@ export default function AddNonceDialog({
 									i18n={i18n.Components.GeneratePassword}
 									defaultValue={meta[index].value || ""}
 									onClose={() => {
-										setValue(`meta.${index}.hide`, "••••••••");
+										setValue(
+											`meta.${index}.hide`,
+											"••••••••"
+										);
 									}}
 									onSelect={(val) => {
-										setValue(`meta.${index}.value`, val || "");
+										setValue(
+											`meta.${index}.value`,
+											val || ""
+										);
 										setValue(`meta.${index}.hide`, "");
 										setValue(`meta.${index}.secret`, true);
 									}}
